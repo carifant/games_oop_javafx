@@ -39,12 +39,12 @@ public class Logic {
         return rst;
     }
 
-    public boolean isFree(Cell ... cells) {
+    public boolean isFree(Cell... cells) {
         boolean result = cells.length > 0;
         for (Cell cell : cells) {
             if (this.findBy(cell) != -1) {
-               result = false;
-               break;
+                result = false;
+                break;
             }
         }
         return result;
@@ -71,24 +71,55 @@ public class Logic {
     public boolean isWin() {
         int[][] table = this.convert();
         boolean result = false;
-        return result;
-    }
 
-    public int[][] convert() {
-        int[][] table = new int[this.size][this.size];
-        for (int row = 0; row != table.length; row++) {
-            for (int cell = 0; cell != table.length; cell++) {
-                int position = this.findBy(new Cell(row, cell));
-                if (position != -1 && this.figures[position].movable()) {
-                    table[row][cell] = 1;
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table.length; j++) {
+                int summ = 0;
+                if (table[i][j] == 1) {
+                    for (int k = 0; k < table.length; k++) {
+                        if (table[i][k] != 1) {
+                            break;
+                        } else {
+                            summ++;
+                            if (summ == 5) {
+                                result = true;
+                                break;
+                            }
+                        }
+                    }
+                    for (int l = 0; l < table.length; l++) {
+                        if (table[l][j] != 1) {
+                            break;
+                        } else {
+                            summ++;
+                            if (summ == 5) {
+                                result = true;
+                                break;
+                            }
+                        }
+                    }
                 }
             }
         }
-        return table;
-    }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(this.convert());
+            return result;
+        }
+
+        public int[][] convert () {
+            int[][] table = new int[this.size][this.size];
+            for (int row = 0; row != table.length; row++) {
+                for (int cell = 0; cell != table.length; cell++) {
+                    int position = this.findBy(new Cell(row, cell));
+                    if (position != -1 && this.figures[position].movable()) {
+                        table[row][cell] = 1;
+                    }
+                }
+            }
+            return table;
+        }
+
+        @Override
+        public String toString () {
+            return Arrays.toString(this.convert());
+        }
     }
-}
