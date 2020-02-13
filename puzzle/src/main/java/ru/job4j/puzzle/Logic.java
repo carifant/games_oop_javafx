@@ -72,42 +72,41 @@ public class Logic {
         int[][] table = this.convert();
         boolean result = false;
         for (int i = 0; i < table.length; i++) {
-             int summ = 0;
-                if (table[i][i] == 1) {
-                    for (int k = 0; k < table.length; k++) {
-                        if (table[i][k] != 1 & table[k][i] != 1) {
-                            break;
-                        } else {
-                            summ++;
-                            if (summ == table.length) {
-                                result = true;
-                                break;
-                            }
-                        }
+            int row = 0;
+            int column = 0;
+            if (table[i][i] == 1) {
+                for (int k = 0; k < table.length; k++) {
+                    if (table[k][i] == 1) {
+                        row++;
                     }
-
-                        }
+                    if (table[i][k] == 1) {
+                        column++;
                     }
-
-
-            return result;
-        }
-
-        public int[][] convert () {
-            int[][] table = new int[this.size][this.size];
-            for (int row = 0; row != table.length; row++) {
-                for (int cell = 0; cell != table.length; cell++) {
-                    int position = this.findBy(new Cell(row, cell));
-                    if (position != -1 && this.figures[position].movable()) {
-                        table[row][cell] = 1;
+                    if (row == table.length || column == table.length) {
+                        result = true;
+                        break;
                     }
                 }
             }
-            return table;
         }
-
-        @Override
-        public String toString () {
-            return Arrays.toString(this.convert());
-        }
+        return result;
     }
+
+    public int[][] convert() {
+        int[][] table = new int[this.size][this.size];
+        for (int row = 0; row != table.length; row++) {
+            for (int cell = 0; cell != table.length; cell++) {
+                int position = this.findBy(new Cell(row, cell));
+                if (position != -1 && this.figures[position].movable()) {
+                    table[row][cell] = 1;
+                }
+            }
+        }
+        return table;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(this.convert());
+    }
+}
