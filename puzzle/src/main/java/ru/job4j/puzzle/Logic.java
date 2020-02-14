@@ -82,11 +82,11 @@ public class Logic {
                     if (table[i][k] == 1) {
                         column++;
                     }
-                    if (row == table.length || column == table.length) {
-                        result = true;
-                        break;
-                    }
                 }
+            }
+            if (row == table.length || column == table.length) {
+                result = true;
+                break;
             }
         }
         return result;
