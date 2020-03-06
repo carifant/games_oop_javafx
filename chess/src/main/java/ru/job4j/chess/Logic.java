@@ -26,6 +26,13 @@ public class Logic {
         int index = this.findBy(source);
         if (index != -1) {
             Cell[] steps = this.figures[index].way(source, dest);
+            for (Cell x : steps) {
+                if (findBy(x) != -1) {
+                    System.out.println("Запрещенный ход");
+                    throw new IllegalStateException(
+                            String.format("Could not go through others figures"));
+                }
+            }
             if (steps.length > 0 && steps[steps.length - 1].equals(dest)) {
                 rst = true;
                 this.figures[index] = this.figures[index].copy(dest);
